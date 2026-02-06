@@ -7,44 +7,43 @@ class Result extends Phaser.Scene {
     this.score = data.score;
   }
 
+
   create() {
-  let stars = 3;
+    let stars = 3;
 
-  if (this.score <= 0) {
-    stars = 0;
-  } else if (this.score <= 80) {
-    stars = 1;
-  } else if (this.score <= 150) {
-    stars = 2;
-  } else {
-    stars = 3;
+    if (this.score <= 0) stars = 0;
+    else if (this.score <= 80) stars = 1;
+    else if (this.score <= 150) stars = 2;
+    else stars = 3;
+
+    //Texto
+    this.add.text(180, 140, '¡Receta terminada!', {
+      fontSize: '22px',
+      color: '#7b5cff',
+      fontStyle: 'bold'
+    }).setOrigin(0.5);
+
+    this.add.text(180, 190, 'Puntaje: ' + this.score, {
+      fontSize: '18px',
+      color: '#7b5cff'
+    }).setOrigin(0.5);
+
+    this.add.text(180, 230, '⭐'.repeat(stars), {
+      fontSize: '32px',
+      color: '#ffb703'
+    }).setOrigin(0.5);
+
+    //boton para regresar
+    const back = this.add.text(180, 420, 'Volver al menú', {
+      fontSize: '18px',
+      backgroundColor: '#ffffff',
+      color: '#7b5cff',
+      fontStyle: 'bold',
+      padding: { x: 24, y: 12 }
+    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
+
+    back.on('pointerdown', () => {
+      this.scene.start('Menu');
+    });
   }
-
-  this.add.text(180, 180, '¡Receta terminada! 🎉', {
-    fontSize: '22px',
-    color: '#5c4033'
-  }).setOrigin(0.5);
-
-  this.add.text(180, 240, 'Puntaje: ' + this.score, {
-    fontSize: '18px',
-    color: '#000'
-  }).setOrigin(0.5);
-
-  this.add.text(180, 290, '⭐'.repeat(stars), {
-    fontSize: '32px',
-    color: '#ffb703'
-  }).setOrigin(0.5);
-
-  const back = this.add.text(180, 360, 'Volver al menú', {
-    fontSize: '18px',
-    backgroundColor: '#8ecae6',
-    color: '#000',
-    padding: { x: 20, y: 10 }
-  }).setOrigin(0.5).setInteractive();
-
-  back.on('pointerdown', () => {
-    this.scene.start('Menu');
-  });
-}
-
 }

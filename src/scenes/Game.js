@@ -3,15 +3,17 @@ class Game extends Phaser.Scene {
     super('Game');
   }
 
+  
+
   create() {
     const { width, height } = this.scale;
 
-    // ===== ESTADO =====
+    //estado
     this.phase = 'INGREDIENTS';
     this.mistakes = 0;
     this.score = 0;
 
-    // ===== TIMER TEXT =====
+    //Estilo de temporizador
     this.timerText = this.add.text(width * 0.05, height * 0.03, '', {
       fontSize: '16px',
       color: '#000'
@@ -19,21 +21,24 @@ class Game extends Phaser.Scene {
 
     this.startTimer(30);
 
-    // ===== TÍTULO =====
-    this.add.text(width / 2, height * 0.07, '🍚 Arroz con leche', {
-      fontSize: '20px',
-      color: '#5c4033'
-    }).setOrigin(0.5);
+    //Titulo de la receta
+this.add.text(width / 2, height * 0.07, '🍚 Arroz con leche', {
+  fontSize: '22px',
+  color: '#7b5cff',
+  fontStyle: 'bold'
+}).setOrigin(0.5);
 
-    // ===== INSTRUCCIONES =====
-    this.instructionText = this.add.text(width / 2, height * 0.13, '', {
-      fontSize: '16px',
-      color: '#000',
-      align: 'center',
-      wordWrap: { width: width * 0.9 }
-    }).setOrigin(0.5);
+    //Estilo instrucciones
+this.instructionText = this.add.text(width / 2, height * 0.13, '', {
+  fontSize: '16px',
+  color: '#7b5cff',
+  align: 'center',
+  fontStyle: 'bold',
+  wordWrap: { width: width * 0.9 }
+}).setOrigin(0.5);
 
-    // ===== BOWL =====
+
+    //Bowl
     this.bowl = this.add.rectangle(
       width / 2,
       height * 0.55,
@@ -42,11 +47,11 @@ class Game extends Phaser.Scene {
       0xffe5b4
     ).setStrokeStyle(2, 0x000000);
 
-    // ===== ORDEN INGREDIENTES =====
+    //Orden en que los ingredientes se deben agregar
     this.ingredientOrder = ['rice', 'milk', 'lemon', 'cinnamon'];
     this.currentIngredientIndex = 0;
 
-    // ===== INGREDIENTES =====
+    //Ingredientes
     this.ingredients = {
       rice: this.createIngredient('🍚', width * 0.1, height * 0.35, 'rice'),
       milk: this.createIngredient('🥛', width * 0.1, height * 0.45, 'milk'),
@@ -54,13 +59,13 @@ class Game extends Phaser.Scene {
       cinnamon: this.createIngredient('🌰', width * 0.9, height * 0.45, 'cinnamon')
     };
 
-    // ===== CUCHARA =====
+    //Cuchara
     this.spoon = this.add.text(width * 0.15, height * 0.55, '🥄', {
       fontSize: '40px'
     });
     this.spoon.setVisible(false);
 
-    // ===== DRAG =====
+    //Arrastrar
     this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
       gameObject.x = dragX;
       gameObject.y = dragY;
@@ -93,7 +98,7 @@ class Game extends Phaser.Scene {
       }
     });
 
-    // ===== FUEGO =====
+    //Fuego
     this.fireLevel = 0;
     this.fireBars = [];
 
@@ -132,7 +137,7 @@ class Game extends Phaser.Scene {
       }
     });
 
-    // ===== BARRA REVOLVER =====
+    //Barra de progreso al revolver
     this.cookBarBg = this.add.rectangle(
       width / 2,
       height * 0.85,
@@ -152,7 +157,7 @@ class Game extends Phaser.Scene {
     this.updateInstructions();
   }
 
-  // ===== TIMER =====
+  //Tiempo
   startTimer(seconds) {
     if (this.timerEvent) this.timerEvent.remove(false);
 
@@ -195,9 +200,9 @@ class Game extends Phaser.Scene {
 
   updateInstructions() {
     const text = {
-      INGREDIENTS: 'Agrega los ingredientes EN ORDEN 🍚 → 🥛 → 🍋 → 🌰',
-      FIRE: 'Sube el fuego hasta el nivel correcto 🔥',
-      STIR: '¡Revuelve rápido! 🥄'
+      INGREDIENTS: 'Agrega los ingredientes en este orden 🍚 → 🥛 → 🍋 → 🌰',
+      FIRE: 'Sube el nivel del fuego',
+      STIR: 'Revuelve el arroz con leche'
     };
     this.instructionText.setText(text[this.phase]);
   }
