@@ -155,30 +155,155 @@ this.instructionText = this.add.text(width / 2, height * 0.13, '', {
     ).setOrigin(0, 0.5);
 
     this.updateInstructions();
+
+   //CHATBOT
+this.chatOpen = false;
+
+// Botón abrir chatbot
+this.chatBtn = this.add.text(20, height - 40, '🤖 Chef ayuda', {
+  fontSize: '14px',
+  backgroundColor: '#90dbf4',
+  color: '#000',
+  padding: { x: 10, y: 6 }
+}).setInteractive();
+
+// Fondo
+this.chatBox = this.add.rectangle(
+  width / 2,
+  height / 2,
+  width * 0.85,
+  height * 0.45,
+  0xffffff
+).setStrokeStyle(2, 0x000000).setVisible(false);
+
+// Texto bot
+this.chatText = this.add.text(
+  width / 2,
+  height / 2 - 80,
+  '👩‍🍳 Hola, soy tu chef ayudante.\n¿En qué te ayudo?',
+  {
+    fontSize: '14px',
+    color: '#000',
+    align: 'center',
+    wordWrap: { width: width * 0.75 }
+  }
+).setOrigin(0.5).setVisible(false);
+
+// Botón CERRAR ❌
+this.chatCloseBtn = this.add.text(
+  width / 2 + (width * 0.35),
+  height / 2 - (height * 0.18),
+  '❌',
+  { fontSize: '18px', color: '#000' }
+).setInteractive().setVisible(false);
+
+// Botones opciones
+const makeBtn = (y, text) =>
+  this.add.text(width / 2, y, text, {
+    fontSize: '14px',
+    backgroundColor: '#ffd166',
+    padding: 6
+  }).setOrigin(0.5).setInteractive().setVisible(false);
+
+this.btnAyuda = makeBtn(height / 2 - 40, 'Ayuda');
+this.btnIngredientes = makeBtn(height / 2, 'Ingredientes');
+this.btnFuego = makeBtn(height / 2 + 40, 'Fuego');
+this.btnMezclar = makeBtn(height / 2 + 80, 'Mezclar');
+this.btnTiempo = makeBtn(height / 2 + 120, 'Tiempo');
+
+
+
+// ABRIR CHAT
+this.chatBtn.on('pointerdown', () => {
+  this.chatOpen = true;
+  this.timerPaused = true; // ⏸️ PAUSA TIEMPO
+
+  this.chatBox.setVisible(true);
+  this.chatText.setVisible(true);
+  this.chatCloseBtn.setVisible(true);
+  this.btnAyuda.setVisible(true);
+  this.btnIngredientes.setVisible(true);
+  this.btnFuego.setVisible(true);
+  this.btnMezclar.setVisible(true);
+  this.btnTiempo.setVisible(true);
+});
+
+// CERRAR CHAT
+this.chatCloseBtn.on('pointerdown', () => {
+  this.chatOpen = false;
+  this.timerPaused = false; // ▶️ REANUDA TIEMPO
+
+  this.chatBox.setVisible(false);
+  this.chatText.setVisible(false);
+  this.chatCloseBtn.setVisible(false);
+  this.btnAyuda.setVisible(false);
+  this.btnIngredientes.setVisible(false);
+  this.btnFuego.setVisible(false);
+  this.btnMezclar.setVisible(false);
+  this.btnTiempo.setVisible(false);
+});
+
+// RESPUESTAS DEL BOT
+this.btnAyuda.on('pointerdown', () => {
+  this.chatText.setText(
+    '👩‍🍳 Arrastra los ingredientes en el orden correcto y sigue cada fase.'
+  );
+});
+
+this.btnIngredientes.on('pointerdown', () => {
+  this.chatText.setText(
+    '👩‍🍳 El orden correcto es: arroz 🍚, leche 🥛, limón 🍋 y canela 🌰.'
+  );
+});
+
+this.btnFuego.on('pointerdown', () => {
+  this.chatText.setText(
+    '👩‍🍳 Sube el fuego hasta completar las 3 barras, ni más ni menos.'
+  );
+});
+
+this.btnMezclar.on('pointerdown', () => {
+  this.chatText.setText(
+    '👩‍🍳 Coloca la cuchara en el rectangulo y haz movimientos circulares lo más rapido que puedas.'
+  );
+});
+
+this.btnTiempo.on('pointerdown', () => {
+  this.chatText.setText(
+    '👩‍🍳 Si el tiempo llega a 0 perderás puntos, ¡apresúrate!'
+  );
+});
+
   }
 
   //Tiempo
-  startTimer(seconds) {
-    if (this.timerEvent) this.timerEvent.remove(false);
-
-    this.timeLeft = seconds;
-    this.timerText.setText(`⏱️ ${this.timeLeft}`);
-
-    this.timerEvent = this.time.addEvent({
-      delay: 1000,
-      callback: () => {
-        this.timeLeft--;
-        this.timerText.setText(`⏱️ ${this.timeLeft}`);
-
-        if (this.timeLeft <= 0) {
-          this.timerEvent.remove(false);
-          this.score -= 20;
-          this.nextPhaseByTime();
-        }
-      },
-      loop: true
-    });
+startTimer(seconds) {
+  if (this.timerEvent) {
+    this.timerEvent.remove(false);
   }
+
+  this.timeLeft = seconds;
+  this.timerPaused = false;
+  this.timerText.setText(`⏱️ ${this.timeLeft}`);
+
+  this.timerEvent = this.time.addEvent({
+    delay: 1000,
+    callback: () => {
+      if (this.timerPaused) return; // ⏸️ PAUSA AQUÍ
+
+      this.timeLeft--;
+      this.timerText.setText(`⏱️ ${this.timeLeft}`);
+
+      if (this.timeLeft <= 0) {
+        this.timerEvent.remove(false);
+        this.score -= 20;
+        this.nextPhaseByTime();
+      }
+    },
+    loop: true
+  });
+}
+
 
   nextPhaseByTime() {
     if (this.phase === 'INGREDIENTS') this.startFirePhase();
