@@ -201,6 +201,7 @@ this.chatCloseBtn = this.add.text(
 const makeBtn = (y, text) =>
   this.add.text(width / 2, y, text, {
     fontSize: '14px',
+    color: 'Black',
     backgroundColor: '#ffd166',
     padding: 6
   }).setOrigin(0.5).setInteractive().setVisible(false);
@@ -216,7 +217,7 @@ this.btnTiempo = makeBtn(height / 2 + 120, 'Tiempo');
 // ABRIR CHAT
 this.chatBtn.on('pointerdown', () => {
   this.chatOpen = true;
-  this.timerPaused = true; // ⏸️ PAUSA TIEMPO
+  this.timerPaused = true; //PAUSA TIEMPO
 
   this.chatBox.setVisible(true);
   this.chatText.setVisible(true);
@@ -231,7 +232,7 @@ this.chatBtn.on('pointerdown', () => {
 // CERRAR CHAT
 this.chatCloseBtn.on('pointerdown', () => {
   this.chatOpen = false;
-  this.timerPaused = false; // ▶️ REANUDA TIEMPO
+  this.timerPaused = false; //REANUDA TIEMPO
 
   this.chatBox.setVisible(false);
   this.chatText.setVisible(false);
@@ -289,7 +290,7 @@ startTimer(seconds) {
   this.timerEvent = this.time.addEvent({
     delay: 1000,
     callback: () => {
-      if (this.timerPaused) return; // ⏸️ PAUSA AQUÍ
+      if (this.timerPaused) return; //Pausa
 
       this.timeLeft--;
       this.timerText.setText(`⏱️ ${this.timeLeft}`);
