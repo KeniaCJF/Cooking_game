@@ -4,82 +4,56 @@ class Menu extends Phaser.Scene {
   }
 
   create() {
-    this.add.text(180, 150, 'Cooking Game', {
-      fontSize: '28px',
-      color: '#7b5cff'
+    const { width, height } = this.scale;
+
+    // TÍTULO
+    this.add.text(width / 2, height * 0.25, 'Cooking Game', {
+      fontSize: '32px',
+      color: '#9b87ff'
     }).setOrigin(0.5);
 
-    this.createButton(180, 260, 'Play', () => {
-      this.scene.start('Levels');
-    });
+    // BOTÓN PLAY
+    this.createButton(
+      width / 2,
+      height * 0.45,
+      'Play',
+      () => {
+        this.scene.start('Game');
+      }
+    );
 
-    this.createButton(180, 330, 'Select level', () => {
-      this.scene.start('Levels');
-    });
+    // BOTÓN SELECT LEVEL
+    this.createButton(
+      width / 2,
+      height * 0.55,
+      'Select level',
+      () => {
+        this.scene.start('Levels');
+      }
+    );
+
+    // 🤖 BOTÓN CHATBOT IA
+    this.createButton(
+      width / 2,
+      height * 0.65,
+      'Chat con IA 🤖',
+      () => {
+        this.scene.start('ChatBotIA');
+      }
+    );
   }
 
   createButton(x, y, text, callback) {
-    const width = 180;
-    const height = 50;
-    const radius = 25;
-
-    // Sombra
-    const shadow = this.add.graphics();
-    shadow.fillStyle(0x000000, 0.15);
-    shadow.fillRoundedRect(
-      x - width / 2 + 4,
-      y - height / 2 + 4,
-      width,
-      height,
-      radius
-    );
-
-    // Fondo
-    const bg = this.add.graphics();
-    bg.fillStyle(0xffffff, 1);
-    bg.fillRoundedRect(
-      x - width / 2,
-      y - height / 2,
-      width,
-      height,
-      radius
-    );
-
-    // Texto
-    const label = this.add.text(x, y, text, {
+    const btn = this.add.text(x, y, text, {
       fontSize: '18px',
-      color: '#7b5cff'
-    }).setOrigin(0.5);
-
-    // Zona interactiva
-    const zone = this.add.zone(x, y, width, height)
+      backgroundColor: '#ffffff',
+      color: '#9b87ff',
+      padding: { x: 40, y: 16 }
+    })
+      .setOrigin(0.5)
       .setInteractive({ useHandCursor: true });
 
-    zone.on('pointerdown', callback);
-
-    // Hover
-    zone.on('pointerover', () => {
-      bg.clear();
-      bg.fillStyle(0xf0edff, 1);
-      bg.fillRoundedRect(
-        x - width / 2,
-        y - height / 2,
-        width,
-        height,
-        radius
-      );
-    });
-
-    zone.on('pointerout', () => {
-      bg.clear();
-      bg.fillStyle(0xffffff, 1);
-      bg.fillRoundedRect(
-        x - width / 2,
-        y - height / 2,
-        width,
-        height,
-        radius
-      );
-    });
+    btn.on('pointerdown', callback);
+    return btn;
   }
 }

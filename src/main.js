@@ -10,7 +10,7 @@ const config = {
   input: {
     activePointers: 3 // permite multitouch
   },
-  scene: [Menu, Levels, Game, Result]
+  scene: [Menu, Levels, Game, ChatBotIA, Result]
 };
 
 new Phaser.Game(config);
