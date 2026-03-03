@@ -41,6 +41,22 @@ class Menu extends Phaser.Scene {
         this.scene.start('ChatBotIA');
       }
     );
+
+  const payBtn = this.add.text(
+  width / 2,
+  height * 0.65,
+  '💳 Comprar versión premium',
+  {
+    fontSize: '16px',
+    backgroundColor: '#ffd166',
+    padding: { x: 20, y: 12 }
+  }
+).setOrigin(0.5).setInteractive();
+
+payBtn.on('pointerdown', () => {
+  window.location.href = "./public/payment.html";
+});
+
   }
 
   createButton(x, y, text, callback) {

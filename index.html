@@ -1,41 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Juego de Cocina</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Juego de Cocina</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="manifest" href="manifest.json">
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
+    <link rel="manifest" href="manifest.json" />
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
 
-  <script src="src/scenes/Menu.js"></script>
-  <script src="src/scenes/Levels.js"></script>
-  <script src="src/scenes/Game.js"></script>
-  <script src="src/scenes/Result.js"></script>
-  <script src="src/scenes/ChatBot.js"></script>
-  <script src="src/main.js"></script>
-  <script async type='module' src='https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js'></script>
-</head>
+    <script src="src/scenes/Menu.js"></script>
+    <script src="src/scenes/Levels.js"></script>
+    <script src="src/scenes/Game.js"></script>
+    <script src="src/scenes/Result.js"></script>
+    <script src="src/scenes/ChatBot.js"></script>
+    <script src="src/main.js"></script>
+    <script
+      async
+      type="module"
+      src="https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js"
+    ></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("./service-worker.js")
+          .then(() => console.log("✅ SW registrado"))
+          .catch((err) => console.error("❌ SW error", err));
+      }
+    </script>
+  </head>
 
-<body>
-
-  <!-- Contenedor del chatbot -->
-  <div id="chatContainer" style="
-      position:absolute;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      display:none;
-      z-index:10;
-  ">
-      <iframe 
-          id="chatFrame"
-          src=""
-          style="width:100%; height:100%; border:none;">
+  <body>
+    <!-- Contenedor del chatbot -->
+    <div
+      id="chatContainer"
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        z-index: 10;
+      "
+    >
+      <iframe
+        id="chatFrame"
+        src=""
+        style="width: 100%; height: 100%; border: none"
+      >
       </iframe>
-  </div>
-<!--<script async type='module' src='https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js'></script>
+    </div>
+    <!--<script async type='module' src='https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js'></script>
 <zapier-interfaces-chatbot-embed is-popup='false' chatbot-id='cmlzvwb92005h11rvq7j18oa1' height='600px' width='400px'></zapier-interfaces-chatbot-embed> -->
-</body>
+  </body>
 </html>
