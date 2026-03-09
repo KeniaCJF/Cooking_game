@@ -31,7 +31,7 @@ async function initPayment() {
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: "https://keniacjf.github.io/Cooking_game/success.html"
+          return_url: "https://keniacjf.github.io/Cooking_game/public/success.html"
         }
       });
 
