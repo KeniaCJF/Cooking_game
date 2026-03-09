@@ -31,7 +31,7 @@ async function initPayment() {
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: "https://cooking-game-backend-hyq6.onrender.com/success.html"
+          return_url: "https://keniacjf.github.io/Cooking_game/success.html"
         }
       });
 
