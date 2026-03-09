@@ -1,6 +1,6 @@
 import { loadStripe } from "https://cdn.skypack.dev/@stripe/stripe-js";
 
-const stripe = await loadStripe("pk_test_51T6fAaH75gzaAckEJVV6pwfqgeIUjGA0GKuJssJNmdIhmGw11gKX9FTa5MrIJzpkIqgKiteVrqxm8lhlLD8lwzwf007Br8kjKQ");
+const stripe = await loadStripe("pk_live_51T6fAFHdpiRTkLl5sNs0EjjOAAhFBQSNxFmGLQvYIbwaS8LgzWSa6XSFy5taKGOuZjpt0qgbCu7Q7VoaDd2fidAp00JWiiGPaw");
 
 async function initPayment() {
   const res = await fetch("https://cooking-game-backend-hyq6.onrender.com/create-payment-intent", {
